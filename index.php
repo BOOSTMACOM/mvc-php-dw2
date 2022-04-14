@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/Paris');
+
 // On vérifie si un controller est appelé depuis l'url
 if(!empty($_GET['controller']))
 {
