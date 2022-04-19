@@ -13,14 +13,20 @@ if(!empty($_GET['controller']))
 else
 {
     // Sinon on utilise le controller par défaut
-    $controller = 'home';
+    $controller = 'Home';
 }
 
+$controllerClassName = ucfirst($controller) . "Controller";
+
+
 // On vérifie si le fichier de controller existe
-if(file_exists(BASE_PATH . 'controller/' . $controller . '-controller.php'))
+if(file_exists(BASE_PATH . 'controller/' . $controllerClassName . '.php'))
 {
     // On inclut le fichier de controller
-    require BASE_PATH . 'controller/' . $controller . '-controller.php';
+    require BASE_PATH . 'controller/' . $controllerClassName . '.php';
+
+    $instance = new $controllerClassName();
+
     
     // Appel de la fonction présente dans le controller appelé
     if(!empty($_GET['action']))
@@ -35,16 +41,17 @@ if(file_exists(BASE_PATH . 'controller/' . $controller . '-controller.php'))
     }
 
     // On vérifie si la fonction existe dans le controller appelé
-    if(function_exists($action))
+    if(method_exists($instance, $action))
     {
         // On appelle la fonction
-        $action();
+        $instance->$action();
     }
     else
     {
         // Sinon on appelle la fonction error404() par défaut
-        require BASE_PATH . 'controller/error-controller.php';
-        error404();
+        require BASE_PATH . 'controller/ErrorController.php';
+        $instance = new ErrorController();
+        $instance->error404();
     }
 
 
@@ -52,6 +59,7 @@ if(file_exists(BASE_PATH . 'controller/' . $controller . '-controller.php'))
 else
 {
     // Sinon on inclut le fichier de controller error par défaut
-    require BASE_PATH . 'controller/error-controller.php';
-    error404();
+    require BASE_PATH . 'controller/ErrorController.php';
+    $instance = new ErrorController();
+    $instance->error404();
 }
