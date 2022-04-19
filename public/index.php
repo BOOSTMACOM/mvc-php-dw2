@@ -1,5 +1,7 @@
 <?php
 
+define("BASE_PATH","../");
+
 date_default_timezone_set('Europe/Paris');
 
 // On vérifie si un controller est appelé depuis l'url
@@ -15,10 +17,10 @@ else
 }
 
 // On vérifie si le fichier de controller existe
-if(file_exists('controller/' . $controller . '-controller.php'))
+if(file_exists(BASE_PATH . 'controller/' . $controller . '-controller.php'))
 {
     // On inclut le fichier de controller
-    require 'controller/' . $controller . '-controller.php';
+    require BASE_PATH . 'controller/' . $controller . '-controller.php';
     
     // Appel de la fonction présente dans le controller appelé
     if(!empty($_GET['action']))
@@ -41,7 +43,7 @@ if(file_exists('controller/' . $controller . '-controller.php'))
     else
     {
         // Sinon on appelle la fonction error404() par défaut
-        require 'controller/error-controller.php';
+        require BASE_PATH . 'controller/error-controller.php';
         error404();
     }
 
@@ -50,6 +52,6 @@ if(file_exists('controller/' . $controller . '-controller.php'))
 else
 {
     // Sinon on inclut le fichier de controller error par défaut
-    require 'controller/error-controller.php';
+    require BASE_PATH . 'controller/error-controller.php';
     error404();
 }

@@ -1,5 +1,7 @@
 <?php
 
+define('ARTICLE_TABLE','article');
+
 try
 {
     $pdo = new PDO('mysql:host=localhost;dbname=mvc-blog','root','', [
@@ -11,23 +13,21 @@ catch(PDOException $pe)
     die("Error : " . $pe->getMessage());
 }
 
-$table = 'article';
-
 /**
  * Permet de récuperer tous les articles
  * @return [type]
  */
-function getAll()
+function getAllArticles()
 {
-    $sql = "SELECT * FROM " . $GLOBALS['table'];
+    $sql = "SELECT * FROM " . ARTICLE_TABLE;
     $query = $GLOBALS['pdo']->prepare($sql);
     $query->execute();
     return $query->fetchAll();
 }
 
-function getById(int $id)
+function getArticleById(int $id)
 {
-    $sql = "SELECT * FROM " . $GLOBALS['table'] . " WHERE id = :id";
+    $sql = "SELECT * FROM " . ARTICLE_TABLE . " WHERE id = :id";
     $query = $GLOBALS['pdo']->prepare($sql);
     $query->execute([
         'id' => $id,
@@ -37,7 +37,7 @@ function getById(int $id)
 
 function insert(array $data)
 {
-    $sql = "INSERT INTO " . $GLOBALS['table'] . 
+    $sql = "INSERT INTO " . ARTICLE_TABLE . 
     " (title, content, created_at) 
     VALUES (:title, :content, NOW())";
     $query = $GLOBALS['pdo']->prepare($sql);
@@ -47,7 +47,7 @@ function insert(array $data)
 
 function update(array $data)
 {
-    $sql = "UPDATE " . $GLOBALS['table'] .
+    $sql = "UPDATE " . ARTICLE_TABLE .
     " SET title = :title, content = :content
      WHERE id = :id";
     $query = $GLOBALS['pdo']->prepare($sql);
@@ -57,7 +57,7 @@ function update(array $data)
 
 function delete(int $id)
 {
-    $article = getById($id);
+    $article = getArticleById($id);
     $article['is_archived'] = 1;
     return update($article);
 }

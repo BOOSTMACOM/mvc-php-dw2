@@ -1,4 +1,4 @@
-<?php include 'view/partials/_top.html.php'; ?>
+<?php include BASE_PATH . 'view/partials/_top.html.php'; ?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
@@ -25,4 +25,4 @@
         </div>
     </div>
 </div>
-<?php include 'view/partials/_bottom.html.php'; ?>
+<?php include BASE_PATH . 'view/partials/_bottom.html.php'; ?>

@@ -8,5 +8,5 @@
  */
 function index() : void
 {
-    include 'view/home/index.html.php';
+    include BASE_PATH . 'view/home/index.html.php';
 }
